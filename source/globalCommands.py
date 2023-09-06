@@ -117,7 +117,30 @@ SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
 	"""
+	
+	@script(
+		description=_(
+			# Translators: Starts a new activity monitor session
+			"Starts a new activity monitor session"
+		),
+		gesture="kb:Control+M"
+	)
+	def script_startLoggingSession(self,gesture):
+		import ActivityLogger
+		ActivityLogger.startSession()
 
+	@script(
+		description=_(
+			# Translators: Describes the Cycle audio ducking mode command.
+			"Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
+		),
+		gesture="kb:Control+B"
+	)
+	def script_stopLoggingSession(self,gesture):
+		import ActivityLogger
+		ActivityLogger.endSession()
+
+		
 	@script(
 		description=_(
 			# Translators: Describes the Cycle audio ducking mode command.

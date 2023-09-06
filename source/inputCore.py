@@ -537,6 +537,10 @@ class InputManager(baseObject.AutoPropertyObject):
 			self._lastInputTime = time.time()
 			log.io("Input: %s" % gesture.identifiers[0])
 
+		if not gesture.isModifier:
+			import ActivityLogger
+			ActivityLogger.logGesture(gesture=gesture.identifiers[0])
+
 		if self._captureFunc:
 			try:
 				if self._captureFunc(gesture) is False:

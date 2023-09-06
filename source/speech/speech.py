@@ -891,6 +891,9 @@ def speak(  # noqa: C901
 
 	if not speechSequence:  # Pointless - nothing to speak
 		return
+	import ActivityLogger
+	if ActivityLogger:
+		ActivityLogger.logSpeechSequence(sequence=speechSequence) 
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
