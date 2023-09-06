@@ -295,7 +295,6 @@ def _setInitialFocus():
 	except:
 		log.exception("Error retrieving initial focus")
 
-
 def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 	import wx
 	lang = languageHandler.getLanguage()
@@ -559,6 +558,9 @@ def main():
 	import mathPres
 	log.debug("Initializing MathPlayer")
 	mathPres.initialize()
+	import ActivityLogger
+	ActivityLogger.initialize()
+	print("Initalising Activity monitor")
 	timeSinceStart = time.time() - NVDAState.getStartTime()
 	if not globalVars.appArgs.minimal and timeSinceStart > 5:
 		log.debugWarning("Slow starting core (%.2f sec)" % timeSinceStart)
@@ -625,7 +627,9 @@ def main():
 	if audioDucking.isAudioDuckingSupported():
 		# the GUI mainloop must be running for this to work so delay it
 		wx.CallAfter(audioDucking.initialize)
-
+	import ActivityLogger
+	ActivityLogger.initialize()
+	print("FUCKERRRRRRRRR")
 	from winAPI.messageWindow import _MessageWindow
 	import versionInfo
 	messageWindow = _MessageWindow(versionInfo.name)
@@ -758,6 +762,7 @@ def main():
 			try:
 				if touchHandler.handler:
 					touchHandler.handler.pump()
+				ActivityLogger.pumpAll()
 				JABHandler.pumpAll()
 				IAccessibleHandler.pumpAll()
 				queueHandler.pumpAll()
@@ -833,6 +838,8 @@ def main():
 		pass
 
 	import treeInterceptorHandler
+	# import ActivityLogger
+	ActivityLogger.terminate()
 	_terminate(treeInterceptorHandler)
 	_terminate(IAccessibleHandler, name="IAccessible support")
 	_terminate(UIAHandler, name="UIA support")
