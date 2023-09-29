@@ -150,7 +150,7 @@ class SessionTracker():
 			for activity in self.activities:
 				thisRow = [activity.attributes[column] for column in columnNames]
 				rows.append(thisRow)
-			with open(filename,'w') as csvFile:
+			with open(filename,'w', encoding="utf-8") as csvFile:
 				csvwriter = csv.writer(csvFile)
 				csvwriter.writerow(columnNames)
 				csvwriter.writerows(rows)
